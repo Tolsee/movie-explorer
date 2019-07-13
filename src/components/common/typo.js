@@ -1,11 +1,17 @@
 // @flow
-import React from 'react';
-import type { Node } from 'react';
+import styled from 'styled-components';
 
-type Props = {
-  children: Node
-}
+export const H1 = styled.h1`
+  font-size: 32px;
+  color: ${({ theme }) => theme.colors.grey};
+`;
 
-export function H1({ children }: Props) {
-  return <h1>{children}</h1>
-}
+export const H2 = styled.h2`
+  font-size: 24px;
+  color: ${({ theme }) => theme.colors.grey};
+`;
+
+export const Paragraph = styled.p`
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.lightGrey};
+`;
