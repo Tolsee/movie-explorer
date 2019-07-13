@@ -3,7 +3,8 @@ import { createGlobalStyle } from 'styled-components';
 export const theme = {
   colors: {
     grey: '#2e444e',
-    lightGrey: '#717171'
+    lightGrey: '#717171',
+    lighterGrey: '#e8e8e8'
   }
 };
 
