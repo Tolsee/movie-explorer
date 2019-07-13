@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Icon from 'antd/lib/icon';
 
-import 'antd/lib/icon/style/index.css';
-
 const ModalWrapper = styled.div`
   position: fixed;
   top: 0;

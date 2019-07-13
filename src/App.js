@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme, GlobalStyle } from 'styled';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Home from 'components/page/Home';
+import Movie from 'components/page/Movie';
 
 import 'antd/dist/antd.min.css';
 
@@ -14,7 +15,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/favorite" component={Home} />
-          <Route path="/movie/:id" component={Home} />
+          <Route path="/movie/:id" component={Movie} />
           <Redirect to="/" />
         </Switch>
       </Router>

@@ -2,29 +2,31 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { H1, Paragraph } from 'components/common/typo';
-import Rate from 'antd/lib/rate';
 import Icon from 'antd/lib/icon';
 import Button from 'antd/lib/button';
 import MoviePlayer from 'components/common/Player';
 import Modal from 'components/common/Modal';
-
-import 'antd/lib/card/style/index.css';
-import 'antd/lib/rate/style/index.css';
-import 'antd/lib/icon/style/index.css';
-import 'antd/lib/button/style/index.css';
+import MovieRating from 'components/common/Rating';
+import type { RatingProps } from 'components/common/Rating';
 
 const CardWrapper = styled.div`
   border-radius: 4px;
   overflow: hidden;
-  margin: 12px 0;
+  margin: 24px 0;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   border: 1px solid ${({ theme }) => theme.colors.lighterGrey};
+  transition: all 0.5s ease-in-out !important; 
+  cursor: pointer;
+  &:hover {
+    border: transparent solid 1px;
+    box-shadow: 0 0 40px 0 rgba(0,0,0,.10);
+  }
 `;
 
 const Cover = styled.div`
-  height: 240px;
+  min-height: 240px;
   position: relative;
 `;
 
@@ -85,33 +87,16 @@ const WatchLater = styled(Button)`
   margin-left: 8px;
 `;
 
-const VoteCount = styled.span`
-  color: ${({ theme }) => theme.colors.lightGrey};
-  font-size: 14px;
-`;
-
-type RatingProps = {
-  rating: number;
-  voteCount: number;
-}
-
-function MovieRating({ rating, voteCount }: RatingProps) {
-  return (
-    <div>
-      <Rate disabled count={10} value={rating} />
-      <VoteCount>{voteCount} votes</VoteCount>
-    </div>
-  )
-}
-
 type Props = {
+  id: string;
   coverImg: string;
   title: string;
   overview: string;
+  goToMovie: Function;
 } & RatingProps;
 
-export function MovieCard({ id, coverImg, title, overview, ...ratingProps }: Props) {
-  const [playModal, setPlayModal] = useState(false);
+export function MovieCard({ id, coverImg, title, overview, goToMovie, ...ratingProps }: Props) {
+  const [openModal, setOpenModal] = useState(false);
   const [video, setVideo] = useState({});
 
   async function getVideo() {
@@ -121,18 +106,24 @@ export function MovieCard({ id, coverImg, title, overview, ...ratingProps }: Pro
     return video;
   }
 
-  async function handlePlay() {
+  async function handlePlay(e) {
+    e.preventDefault();
+    e.stopPropagation();
     const video = await getVideo();
     setVideo(video);
-    setPlayModal(true);
+    setOpenModal(true);
   }
 
   async function handleWatchLater() {
     console.log('Watch later');
   }
 
+  function handleCardClick() {
+    goToMovie(id);
+  }
+
   return  (
-    <CardWrapper>
+    <CardWrapper onClick={handleCardClick}>
       <Cover>
         <CoverImg src={coverImg} alt={ `${title} poster` } />
         <FavoriteContainer>
@@ -146,7 +137,7 @@ export function MovieCard({ id, coverImg, title, overview, ...ratingProps }: Pro
         <PlayButton icon="play-circle" onClick={handlePlay}>Play Trailer</PlayButton>
         <WatchLater icon="clock-circle" onClick={handleWatchLater}>Watch Later</WatchLater>
       </Desc>
-      <Modal isOpen={playModal} onCancel={() => setPlayModal(false)}>
+      <Modal isOpen={openModal} onCancel={() => setOpenModal(false)}>
         <MoviePlayer videoKey={video.key} {...video} />
       </Modal>
     </CardWrapper>
