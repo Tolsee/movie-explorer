@@ -7,8 +7,8 @@ import { createCoverImg } from 'utils/imageSrc';
 const { Search } = Input;
 
 const HomeWrapper = styled.div`
-  width: 100vw;
-  padding: 0 12px; 
+  width: 80vw;
+  margin: 0 auto;
 `;
 
 const HeaderWrapper = styled.div`
