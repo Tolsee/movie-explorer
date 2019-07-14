@@ -10,6 +10,8 @@ const HeroSection = styled.div`
   max-height: 80vh;
   overflow: hidden;
   position: relative;
+  display: flex;
+  justify-content: center;
   &::after {
     display: block;
     position: absolute;
@@ -32,6 +34,10 @@ const TitleBar = styled.div`
   z-index: 2;
 `;
 
+const TitleSection = styled.div`
+  flex: 1;
+`;
+
 const Title = styled(H1)`
   && {
     color: #fff;
@@ -48,6 +54,10 @@ const TagLine = styled(Paragraph)`
 const CoverImg = styled.img`
   width: 100%;
   height: auto;
+  @media (max-width: 992px) { 
+    height: 50vh;
+    width: auto;
+  }
 `;
 
 const BackLink = styled(Link)`
@@ -87,10 +97,10 @@ export default function Card({ id, src, title, tagLine }:CardProps) {
       </BackLink>
       <CoverImg src={src} alt="" />
       <TitleBar>
-        <div>
+        <TitleSection>
           <Title>{title}</Title>
           <TagLine>{tagLine}</TagLine>
-        </div>
+        </TitleSection>
         <Favorite id={id} />
       </TitleBar>
     </HeroSection>

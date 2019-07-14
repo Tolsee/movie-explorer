@@ -23,10 +23,16 @@ const Card = styled.div`
   background-color: #fff;
   padding: 48px;
   box-shadow: 0 0 40px 0 rgba(0,0,0,.10);
+  @media (max-width: 992px) { 
+    padding: 24px;
+  }
 `;
 
 const DescriptionContainer = styled.div`
   display: flex;
+  @media (max-width: 992px) { 
+    flex-direction: column;
+  }
 `;
 
 const LeftSection = styled.div`
@@ -36,6 +42,10 @@ const LeftSection = styled.div`
 const RightSection = styled.div`
   flex: 1; 
   margin-left: 24px;
+  @media (max-width: 992px) { 
+    margin-left: 0;
+    margin-top: 24px;
+  }
 `;
 
 const Poster = styled.img`

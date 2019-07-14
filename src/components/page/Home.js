@@ -9,6 +9,9 @@ const { Search } = Input;
 const HomeWrapper = styled.div`
   width: 80vw;
   margin: 0 auto;
+  @media (max-width: 992px) { 
+    width: 90vw;
+  }
 `;
 
 const HeaderWrapper = styled.div`

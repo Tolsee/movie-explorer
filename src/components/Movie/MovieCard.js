@@ -2,12 +2,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { H1, Paragraph } from 'components/common/typo';
-import Icon from 'antd/lib/icon';
 import Button from 'antd/lib/button';
 import MoviePlayer from 'components/common/Player';
 import Modal from 'components/common/Modal';
 import MovieRating from 'components/common/Rating';
 import type { RatingProps } from 'components/common/Rating';
+import Favorite from 'components/common/Favorite';
 
 const CardWrapper = styled.div`
   border-radius: 4px;
@@ -23,51 +23,49 @@ const CardWrapper = styled.div`
     border: transparent solid 1px;
     box-shadow: 0 0 40px 0 rgba(0,0,0,.10);
   }
+  @media (max-width: 992px) { 
+    flex-direction: column;
+  }
 `;
 
 const Cover = styled.div`
   min-height: 240px;
   position: relative;
+  @media (max-width: 992px) { 
+    width: 100%;
+    min-height: auto;
+  }
 `;
 
 const CoverImg = styled.img`
   height: 100%;
   width: auto;
-`;
-
-const FavoriteContainer = styled.div`
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  background-color: rgba(45, 162, 211, 0.8);
-  position: absolute;
-  bottom: 12px;
-  right: 8px;
-  cursor: pointer;
-  color: #fff;
-  &:hover {
-    i {
-      color: #f752ac;
-    }
+  @media (max-width: 992px) { 
+    width: 100%;
+    height: auto;
   }
 `;
 
-const Favorite = styled(Icon)`
-  font-size: 24px;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  color: white;
+const StyledFavorite = styled(Favorite)`
+  && {
+    position: absolute;
+    bottom: 12px;
+    right: 8px;
+  }
 `;
 
 const Title = styled(H1)`
-  margin-top: 0;
+  && {
+    margin-top: 0;
+  }
 `;
 
 const Desc = styled.div`
   flex: 1;
   padding: 0 12px;
+  @media (max-width: 992px) { 
+    margin: 12px 0;
+  }
 `;
 
 const Overview = styled(Paragraph)`
@@ -126,9 +124,7 @@ export function MovieCard({ id, coverImg, title, overview, goToMovie, ...ratingP
     <CardWrapper onClick={handleCardClick}>
       <Cover>
         <CoverImg src={coverImg} alt={ `${title} poster` } />
-        <FavoriteContainer>
-          <Favorite type="heart" />
-        </FavoriteContainer>
+        <StyledFavorite id={id} />
       </Cover>
       <Desc>
         <Title>{title}</Title>

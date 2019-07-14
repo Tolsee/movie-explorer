@@ -18,15 +18,19 @@ export default function Movie(props) {
   }
 
   const {
+    id,
     backdrop_path: path,
     poster_path: posterPath,
     title,
-    tagline,
+    tagline: tagLine,
     overview,
     genres,
     vote_average: rating,
     vote_count: voteCount,
-    videos: { results = [] } = {}
+    videos: { results = [] } = {},
+    release_date: releaseDate,
+    status,
+    runtime
   } = movie;
 
   const cover = createCoverImg(path, 'original');
@@ -35,16 +39,17 @@ export default function Movie(props) {
 
   return (
     <div>
-      <Hero src={cover} />
+      <Hero id={id} src={cover} title={title} tagLine={tagLine} />
       <InfoCard
-        title={title}
-        tagLine={tagline}
         overview={overview}
         genres={genres}
         rating={rating}
         voteCount={voteCount}
         poster={poster}
         trailer={trailer}
+        releaseDate={releaseDate}
+        status={status}
+        runtime={runtime}
       />
     </div>
   )
