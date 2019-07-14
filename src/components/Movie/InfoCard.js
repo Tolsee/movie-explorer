@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { H1, Paragraph } from 'components/common/typo';
+
+import Button from 'antd/lib/button';
 import Tag from 'antd/lib/tag';
+import Divider from 'antd/lib/divider';
+
+import { Paragraph } from 'components/common/typo';
 import MovieRating from 'components/common/Rating';
 import type { RatingProps } from 'components/common/Rating';
-import Button from 'antd/lib/button';
 import MoviePlayer from 'components/common/Player';
 import Modal from 'components/common/Modal';
 
@@ -21,10 +24,6 @@ const Card = styled.div`
   padding: 48px;
   box-shadow: 0 0 40px 0 rgba(0,0,0,.10);
 `;
-
-const Title = styled(H1)``;
-
-const TagLine = styled(Paragraph)``;
 
 const DescriptionContainer = styled.div`
   display: flex;
@@ -61,9 +60,7 @@ const Genre = styled(Paragraph)`
   margin: 0 12px 0 0;
 `;
 
-const TableContainer = styled.div`
-  margin-top: 48px;
-`;
+const TableContainer = styled.div``;
 
 const Section = styled.div`
   display: flex;
@@ -72,6 +69,7 @@ const Section = styled.div`
 const InfoKey = styled(Paragraph)`
   font-weight: bold;
   flex: 1;
+  margin-top: 0;
 `;
 
 const InfoValue = styled(Paragraph)`
@@ -79,8 +77,6 @@ const InfoValue = styled(Paragraph)`
 `;
 
 type InfoProps = {
-  title: string;
-  tagLine: string;
   poster: string;
   overview: string;
   genres: {
@@ -90,10 +86,23 @@ type InfoProps = {
   trailer: {
     key: string;
     site: string;
-  }
+  };
+  releaseDate: string;
+  status: string;
+  runtime: number;
 } & RatingProps;
 
-export default function InfoCard({ title, tagLine, poster, overview, genres = [], rating, voteCount, trailer }: InfoProps) {
+export default function InfoCard({
+                                   poster,
+                                   overview,
+                                   genres = [],
+                                   rating,
+                                   voteCount,
+                                   trailer,
+                                   releaseDate,
+                                   status,
+                                   runtime
+                                 }: InfoProps) {
   const [openModal, setOpenModal] = useState(false);
 
   function modalToggle() {
@@ -103,8 +112,6 @@ export default function InfoCard({ title, tagLine, poster, overview, genres = []
   return (
     <InfoContainer>
       <Card>
-        <Title>{title}</Title>
-        <TagLine>{tagLine}</TagLine>
         <DescriptionContainer>
           <LeftSection>
             <Poster src={poster} alt="" />
@@ -122,18 +129,19 @@ export default function InfoCard({ title, tagLine, poster, overview, genres = []
               }
             </Genres>
             <MovieRating voteCount={voteCount} rating={rating} />
+            <Divider />
             <TableContainer>
               <Section>
                 <InfoKey>Status</InfoKey>
-                <InfoValue>Released</InfoValue>
+                <InfoValue>{status}</InfoValue>
               </Section>
               <Section>
                 <InfoKey>Release Date</InfoKey>
-                <InfoValue>17th February 2017</InfoValue>
+                <InfoValue>{releaseDate}</InfoValue>
               </Section>
               <Section>
                 <InfoKey>Runtime</InfoKey>
-                <InfoValue>2hr 2 min</InfoValue>
+                <InfoValue>{runtime}</InfoValue>
               </Section>
             </TableContainer>
           </RightSection>
