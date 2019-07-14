@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, {useEffect} from 'react';
 import type {Node} from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
@@ -36,6 +36,8 @@ const CloseButton = styled(Icon)`
   }
 `;
 
+
+
 type ModalProps = {
   isOpen: boolean;
   children: Node;
@@ -43,12 +45,26 @@ type ModalProps = {
 }
 
 export default function Modal({ isOpen, children, onCancel }: ModalProps) {
+  const el = document.createElement('div');
+  useEffect(() => {
+    let modalRoot = document.getElementById('modal-root');
+    if (!modalRoot) {
+      modalRoot = document.createElement('div');
+      modalRoot.setAttribute('id', 'modal-root');
+      document.body.appendChild(modalRoot);
+    }
+    modalRoot.appendChild(el);
+    return () => {
+      modalRoot.removeChild(el);
+    }
+  });
+
   return isOpen ? ReactDOM.createPortal(
     <ModalWrapper onClick={onCancel}>
       <CloseButton onClick={onCancel} type="close"/>
       <ModalContent>
         {children}
       </ModalContent>
-    </ModalWrapper>, document.body
+    </ModalWrapper>, el
   ) : null;
 }
