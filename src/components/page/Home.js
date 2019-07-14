@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Input from 'antd/lib/input';
-import { MovieCard } from 'components/common/movie';
+import { MovieCard } from 'components/Movie/MovieCard';
 import { createCoverImg } from 'utils/imageSrc';
 
 const { Search } = Input;
