@@ -25,12 +25,15 @@ const ModalContent = styled.div`
 `;
 
 const CloseButton = styled(Icon)`
-  position: fixed;
-  cursor: pointer;
-  right: 5%;
-  top: 5%;
-  transform: translate(-50%, -50%);
-  color: #fff;
+  && {
+    position: fixed;
+    cursor: pointer;
+    right: 5%;
+    top: 5%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 24px;
+  }
 `;
 
 type ModalProps = {

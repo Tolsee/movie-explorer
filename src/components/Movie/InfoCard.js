@@ -10,7 +10,7 @@ import Modal from 'components/common/Modal';
 
 const InfoContainer = styled.div` 
   width: 90vw;
-  margin: -48px auto 0;
+  margin: -48px auto 24px;
   z-index: 2;
   position: relative;
 `;
