@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { formatDate, formatTime } from "../../utils/format";
 
 import Button from 'antd/lib/button';
 import Tag from 'antd/lib/tag';
@@ -147,11 +148,11 @@ export default function InfoCard({
               </Section>
               <Section>
                 <InfoKey>Release Date</InfoKey>
-                <InfoValue>{releaseDate}</InfoValue>
+                <InfoValue>{formatDate(releaseDate)}</InfoValue>
               </Section>
               <Section>
                 <InfoKey>Runtime</InfoKey>
-                <InfoValue>{runtime}</InfoValue>
+                <InfoValue>{formatTime(runtime)}</InfoValue>
               </Section>
             </TableContainer>
           </RightSection>
