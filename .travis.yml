@@ -7,4 +7,4 @@ cache:
 script:
   - npm run build
   - npm install -g codecov
-  - npm test --coverage && codecov
+  - npm test -- --coverage --watchAll=false && codecov
