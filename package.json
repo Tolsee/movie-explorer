@@ -36,5 +36,14 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/src/setupTests.js",
+      "!<rootDir>/src/serviceWorker.js",
+      "!<rootDir>/src/utils/testUtils.js"
+    ]
+  }
 }
