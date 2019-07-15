@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Tolsee/movie-explorer.svg?branch=master)](https://travis-ci.org/Tolsee/movie-explorer)
+[![codecov](https://codecov.io/gh/Tolsee/movie-explorer/branch/master/graph/badge.svg)](https://codecov.io/gh/Tolsee/movie-explorer)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
