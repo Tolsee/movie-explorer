@@ -11,11 +11,12 @@ import MovieRating from 'components/common/Rating';
 import type { RatingProps } from 'components/common/Rating';
 import MoviePlayer from 'components/common/Player';
 import Modal from 'components/common/Modal';
+import Loading from 'components/common/Loading';
+import Section from 'components/common/Section';
+import WatchLater from 'components/common/WatchLater';
 
-const InfoContainer = styled.div` 
-  width: 90vw;
+const InfoContainer = styled(Section)` 
   margin: -48px auto 24px;
-  z-index: 2;
   position: relative;
 `;
 
@@ -24,20 +25,19 @@ const Card = styled.div`
   background-color: #fff;
   padding: 48px;
   box-shadow: 0 0 40px 0 rgba(0,0,0,.10);
+  display: flex;
+  justify-content: center;
   @media (max-width: 992px) { 
     padding: 24px;
-  }
-`;
-
-const DescriptionContainer = styled.div`
-  display: flex;
-  @media (max-width: 992px) { 
     flex-direction: column;
   }
 `;
 
 const LeftSection = styled.div`
   max-width: 300px;
+  @media (max-width: 992px) { 
+    max-width: none;
+  }
 `;
 
 const RightSection = styled.div`
@@ -71,9 +71,13 @@ const Genre = styled(Paragraph)`
   margin: 0 12px 0 0;
 `;
 
+const StyledWatchLater = styled(WatchLater)`
+  margin-left: 0;
+`;
+
 const TableContainer = styled.div``;
 
-const Section = styled.div`
+const Row = styled.div`
   display: flex;
 `;
 
@@ -88,6 +92,7 @@ const InfoValue = styled(Paragraph)`
 `;
 
 type InfoProps = {
+  id: string;
   poster: string;
   overview: string;
   genres: {
@@ -101,9 +106,11 @@ type InfoProps = {
   releaseDate: string;
   status: string;
   runtime: number;
+  loading: boolean;
 } & RatingProps;
 
 export default function InfoCard({
+                                   id,
                                    poster,
                                    overview,
                                    genres = [],
@@ -112,7 +119,8 @@ export default function InfoCard({
                                    trailer,
                                    releaseDate,
                                    status,
-                                   runtime
+                                   runtime,
+                                   loading
                                  }: InfoProps) {
   const [openModal, setOpenModal] = useState(false);
 
@@ -120,43 +128,50 @@ export default function InfoCard({
     setOpenModal(!openModal);
   }
 
+  function renderDetails() {
+    return (
+      <>
+        <LeftSection>
+          <Poster src={poster} alt="" />
+          <PlayButton icon="play-circle" onClick={modalToggle}>Play Trailer</PlayButton>
+          <Modal isOpen={openModal} onCancel={modalToggle}>
+            <MoviePlayer videoKey={trailer.key} {...trailer} />
+          </Modal>
+        </LeftSection>
+        <RightSection>
+          <Overview>{overview}</Overview>
+          <Genres>
+            <Genre>Genres:</Genre>
+            {
+              genres.map(({ id, name }) => <Tag key={id} color="blue">{name}</Tag>)
+            }
+          </Genres>
+          <MovieRating voteCount={voteCount} rating={rating} />
+          <StyledWatchLater id={id} />
+          <Divider />
+          <TableContainer>
+            <Row>
+              <InfoKey>Status</InfoKey>
+              <InfoValue>{status}</InfoValue>
+            </Row>
+            <Row>
+              <InfoKey>Release Date</InfoKey>
+              <InfoValue>{formatDate(releaseDate)}</InfoValue>
+            </Row>
+            <Row>
+              <InfoKey>Runtime</InfoKey>
+              <InfoValue>{formatTime(runtime)}</InfoValue>
+            </Row>
+          </TableContainer>
+        </RightSection>
+      </>
+    );
+  }
+
   return (
     <InfoContainer>
       <Card>
-        <DescriptionContainer>
-          <LeftSection>
-            <Poster src={poster} alt="" />
-            <PlayButton icon="play-circle" onClick={modalToggle}>Play Trailer</PlayButton>
-            <Modal isOpen={openModal} onCancel={modalToggle}>
-              <MoviePlayer videoKey={trailer.key} {...trailer} />
-            </Modal>
-          </LeftSection>
-          <RightSection>
-            <Overview>{overview}</Overview>
-            <Genres>
-              <Genre>Genres:</Genre>
-              {
-                genres.map(({ id, name }) => <Tag key={id} color="blue">{name}</Tag>)
-              }
-            </Genres>
-            <MovieRating voteCount={voteCount} rating={rating} />
-            <Divider />
-            <TableContainer>
-              <Section>
-                <InfoKey>Status</InfoKey>
-                <InfoValue>{status}</InfoValue>
-              </Section>
-              <Section>
-                <InfoKey>Release Date</InfoKey>
-                <InfoValue>{formatDate(releaseDate)}</InfoValue>
-              </Section>
-              <Section>
-                <InfoKey>Runtime</InfoKey>
-                <InfoValue>{formatTime(runtime)}</InfoValue>
-              </Section>
-            </TableContainer>
-          </RightSection>
-        </DescriptionContainer>
+        {loading ? <Loading size="large" /> : renderDetails()}
       </Card>
     </InfoContainer>
   );

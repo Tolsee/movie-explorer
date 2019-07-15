@@ -8,9 +8,10 @@ import Modal from 'components/common/Modal';
 import MovieRating from 'components/common/Rating';
 import type { RatingProps } from 'components/common/Rating';
 import Favorite from 'components/common/Favorite';
+import WatchLater from 'components/common/WatchLater';
 
 const CardWrapper = styled.div`
-  border-radius: 4px;
+  border-radius: 20px;
   overflow: hidden;
   margin: 24px 0;
   display: flex;
@@ -70,7 +71,7 @@ const Desc = styled.div`
 
 const Overview = styled(Paragraph)`
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -78,11 +79,6 @@ const Overview = styled(Paragraph)`
 
 const PlayButton = styled(Button)`
   margin-top: 8px;
-`;
-
-const WatchLater = styled(Button)`
-  margin-top: 8px;
-  margin-left: 8px;
 `;
 
 type Props = {
@@ -105,15 +101,10 @@ export function MovieCard({ id, coverImg, title, overview, goToMovie, ...ratingP
   }
 
   async function handlePlay(e) {
-    e.preventDefault();
     e.stopPropagation();
     const video = await getVideo();
     setVideo(video);
     setOpenModal(true);
-  }
-
-  async function handleWatchLater() {
-    console.log('Watch later');
   }
 
   function handleCardClick() {
@@ -131,7 +122,7 @@ export function MovieCard({ id, coverImg, title, overview, goToMovie, ...ratingP
         <Overview>{overview}</Overview>
         <MovieRating {...ratingProps} />
         <PlayButton icon="play-circle" onClick={handlePlay}>Play Trailer</PlayButton>
-        <WatchLater icon="clock-circle" onClick={handleWatchLater}>Watch Later</WatchLater>
+        <WatchLater id={id} />
       </Desc>
       <Modal isOpen={openModal} onCancel={() => setOpenModal(false)}>
         <MoviePlayer videoKey={video.key} {...video} />
