@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Tolsee/movie-explorer.svg?branch=master)](https://travis-ci.org/Tolsee/movie-explorer)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
