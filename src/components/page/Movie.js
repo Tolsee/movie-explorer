@@ -1,20 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import { createCoverImg } from 'utils/imageSrc';
+import {getMovie, getSimilarMovies} from 'utils/api';
 
 import Hero from 'components/Movie/Hero';
 import InfoCard from 'components/Movie/InfoCard';
+import { H1 } from 'components/common/typo';
+import { MovieCard } from 'components/Movie/MovieCard';
+import Section from 'components/common/Section';
 
-export default function Movie(props) {
+export default function Movie({ history, match: { params: { id: movieId } }}) {
   const [movie, setMovie] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [similarMovies, setSimilarMovies] = useState([]);
 
   useEffect(() => {
-    getMovie();
-  }, []);
+    (async function () {
+      const movie = await getMovie(movieId);
+      setMovie(movie);
+      setLoading(false);
+      const { results } = await getSimilarMovies(movieId);
+      setSimilarMovies(results);
+    })();
+  }, [movieId]);
 
-  async function getMovie() {
-    const { match: { params: { id } } } = props;
-    const movie = await fetch(`https://api.themoviedb.org/3/movie/${id}?append_to_response=videos&language=en-US&api_key=fa8766f08ba2aaa90b64c21d14d6d3e7`).then(response => response.json());
-    setMovie(movie);
+  function goToMovie(id) {
+    history.push(`/movie/${id}`);
   }
 
   const {
@@ -41,6 +51,7 @@ export default function Movie(props) {
     <div>
       <Hero id={id} src={cover} title={title} tagLine={tagLine} />
       <InfoCard
+        id={id}
         overview={overview}
         genres={genres}
         rating={rating}
@@ -50,7 +61,25 @@ export default function Movie(props) {
         releaseDate={releaseDate}
         status={status}
         runtime={runtime}
+        loading={loading}
       />
+      <Section>
+        <H1>Similar Movies</H1>
+        {
+          similarMovies.map(({ id, title, backdrop_path: path, overview, vote_average: rating, vote_count: voteCount }) =>
+            <MovieCard
+              key={id}
+              id={id}
+              coverImg={createCoverImg(path)}
+              title={title}
+              overview={overview}
+              rating={rating}
+              voteCount={voteCount}
+              goToMovie={goToMovie}
+            />
+          )
+        }
+      </Section>
     </div>
   )
 }
