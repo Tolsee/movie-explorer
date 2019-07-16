@@ -3,8 +3,8 @@ import React from 'react';
 import Player from 'react-player';
 
 type Props = {
-  key: string;
-  provider: string;
+  videoKey: string;
+  site: string;
 }
 
 function createYoutube(key) {

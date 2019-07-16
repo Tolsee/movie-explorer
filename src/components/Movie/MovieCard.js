@@ -111,6 +111,7 @@ export default function MovieCard({ id, coverImg, title, overview, goToMovie, ..
     goToMovie(id);
   }
 
+  const { key: videoKey, site } = video;
   return  (
     <CardWrapper onClick={handleCardClick}>
       <Cover>
@@ -125,7 +126,7 @@ export default function MovieCard({ id, coverImg, title, overview, goToMovie, ..
         <WatchLater id={id} />
       </Desc>
       <Modal isOpen={openModal} onCancel={playToggle}>
-        <MoviePlayer videoKey={video.key} {...video} />
+        <MoviePlayer videoKey={videoKey} site={site} />
       </Modal>
     </CardWrapper>
   )
