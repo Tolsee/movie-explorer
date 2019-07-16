@@ -3,17 +3,18 @@ const FAVORITE_MOVIES_KEY = 'favorite_movies';
 const WATCH_LATER_MOVIES_KEY = 'watch_later_movies';
 
 function getArray(key: string) {
-  return JSON.parse(localStorage.getItem(key)) || [];
+  // $FlowFixMe
+  return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : [];
 }
 
 function addToStorageSet(key: string, value: string) {
-  const existingArray = JSON.parse(localStorage.getItem(key)) || [];
+  const existingArray = getArray(key);
   const newArray = [...(new Set([...existingArray, value]))];
   localStorage.setItem(key, JSON.stringify(newArray));
 }
 
 function removeFromStorageSet(key: string, value: string) {
-  const existingArray = JSON.parse(localStorage.getItem(key)) || [];
+  const existingArray = getArray(key);
   const newArray = existingArray.filter(element => element !== value);
   localStorage.setItem(FAVORITE_MOVIES_KEY, JSON.stringify(newArray));
 }
@@ -34,14 +35,17 @@ export function removeWatchLaterMovie(id: string) {
   removeFromStorageSet(WATCH_LATER_MOVIES_KEY, id);
 }
 
-export function checkFavorite(id) {
-  const existingArray = JSON.parse(localStorage.getItem(FAVORITE_MOVIES_KEY)) || [];
-  return !!existingArray.find(element => element === id);
+function checkIfExists(key: string, value: string) {
+  const existingArray = getArray(key);
+  return !!existingArray.find(element => element === value);
 }
 
-export function checkWatchLater(id) {
-  const existingArray = JSON.parse(localStorage.getItem(WATCH_LATER_MOVIES_KEY)) || [];
-  return !!existingArray.find(element => element === id);
+export function checkFavorite(id: string) {
+  return checkIfExists(FAVORITE_MOVIES_KEY, id);
+}
+
+export function checkWatchLater(id: string) {
+  return checkIfExists(WATCH_LATER_MOVIES_KEY, id);
 }
 
 export function getFavoriteMovies() {
