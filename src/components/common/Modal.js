@@ -36,8 +36,6 @@ const CloseButton = styled(Icon)`
   }
 `;
 
-
-
 type ModalProps = {
   isOpen: boolean;
   children: Node;
@@ -61,7 +59,7 @@ export default function Modal({ isOpen, children, onCancel }: ModalProps) {
 
   return isOpen ? ReactDOM.createPortal(
     <ModalWrapper onClick={onCancel}>
-      <CloseButton onClick={onCancel} type="close"/>
+      <CloseButton type="close"/>
       <ModalContent>
         {children}
       </ModalContent>
