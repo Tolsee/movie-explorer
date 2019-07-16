@@ -9,6 +9,7 @@ import MovieRating from 'components/common/Rating';
 import type { RatingProps } from 'components/common/Rating';
 import Favorite from 'components/common/Favorite';
 import WatchLater from 'components/common/WatchLater';
+import { getTrailerVideo } from 'utils/api';
 
 const CardWrapper = styled.div`
   border-radius: 20px;
@@ -89,20 +90,13 @@ type Props = {
   goToMovie: Function;
 } & RatingProps;
 
-export function MovieCard({ id, coverImg, title, overview, goToMovie, ...ratingProps }: Props) {
+export default function MovieCard({ id, coverImg, title, overview, goToMovie, ...ratingProps }: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [video, setVideo] = useState({});
 
-  async function getVideo() {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=fa8766f08ba2aaa90b64c21d14d6d3e7&language=en-US`).then(response => response.json());
-    const results = response.results;
-    const video = results.find(video => video.type === 'Trailer');
-    return video;
-  }
-
   async function handlePlay(e) {
     e.stopPropagation();
-    const video = await getVideo();
+    const video = await getTrailerVideo(id);
     setVideo(video);
     setOpenModal(true);
   }
