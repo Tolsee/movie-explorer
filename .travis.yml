@@ -6,5 +6,6 @@ cache:
     - node_modules
 script:
   - npm run build
+  - npm run flow
   - npm install -g codecov
   - npm test -- --coverage --watchAll=false && codecov
