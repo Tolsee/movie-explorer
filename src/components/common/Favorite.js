@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import Icon from 'antd/lib/icon';
+import message from 'antd/lib/message';
+
+import {
+  setFavoriteMovie,
+  removeFavoriteMovie,
+  checkFavorite
+} from 'utils/localStorage';
 
 const FavoriteContainer = styled.div`
   height: 40px;
@@ -9,7 +16,7 @@ const FavoriteContainer = styled.div`
   background-color: rgba(45, 162, 211, 0.8);
   position: relative;
   cursor: pointer;
-  color: #fff;
+  color: ${({ fav }) => fav ? '#f752ac' : '#fff'};
   &:hover {
     i {
       color: #f752ac;
@@ -32,13 +39,27 @@ type FavoriteProps = {
 }
 
 export default function MovieFavorite({ className, id }: FavoriteProps) {
-  function handleFavorite() {
-    console.log(`Favorite ${id}`);
+  const [favorite, setFavorite] = useState(false);
+  useEffect(() => {
+    setFavorite(checkFavorite(id));
+  }, [id]);
+
+  function handleFavorite(e) {
+    e.stopPropagation();
+    if (favorite) {
+      removeFavoriteMovie(id);
+      setFavorite(false);
+      message.success('Movie removed from favorite list.');
+    } else {
+      setFavoriteMovie(id);
+      setFavorite(true);
+      message.success('Movie added to favorite list.');
+    }
   }
 
   return (
-    <FavoriteContainer onClick={handleFavorite} className={className}>
-      <Favorite type="heart" />
+    <FavoriteContainer onClick={handleFavorite} className={className} fav={favorite}>
+      <Favorite type="heart" theme={favorite ? 'twoTone' : null} twoToneColor="#f752ac" />
     </FavoriteContainer>
   )
 }
