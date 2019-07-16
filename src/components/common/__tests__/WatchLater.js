@@ -1,10 +1,10 @@
 import React from 'react'
 import { render, fireEvent } from 'utils/testUtil';
-import Favorite from 'components/common/Favorite';
+import WatchLater from 'components/common/WatchLater';
 
 it('renders Favorite component', () => {
   const id = '123';
-  render(<Favorite id={id} />);
+  render(<WatchLater id={id} />);
 });
 
 it('stores movie in favorite list when already not on list', () => {
@@ -15,13 +15,13 @@ it('stores movie in favorite list when already not on list', () => {
   window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify([]));
 
   const id = '123';
-  const { container } = render(<Favorite id={id} />);
-  fireEvent(container.querySelector('div'), new MouseEvent('click', {
+  const { container } = render(<WatchLater id={id} />);
+  fireEvent(container.querySelector('button'), new MouseEvent('click', {
     bubbles: true,
     cancelable: true,
   }));
 
-  expect(localStorage.setItem).toHaveBeenCalledWith('favorite_movies', JSON.stringify([id]));
+  expect(localStorage.setItem).toHaveBeenCalledWith('watch_later_movies', JSON.stringify([id]));
 });
 
 it('removes movie from favorite list when already on list', () => {
@@ -32,11 +32,11 @@ it('removes movie from favorite list when already on list', () => {
   window.localStorage.__proto__.setItem = jest.fn();
   window.localStorage.__proto__.getItem = jest.fn(() => JSON.stringify([id]));
 
-  const { container } = render(<Favorite id={id} />);
-  fireEvent(container.querySelector('div'), new MouseEvent('click', {
+  const { container } = render(<WatchLater id={id} />);
+  fireEvent(container.querySelector('button'), new MouseEvent('click', {
     bubbles: true,
     cancelable: true,
   }));
 
-  expect(localStorage.setItem).toHaveBeenCalledWith('favorite_movies', JSON.stringify([]));
+  expect(localStorage.setItem).toHaveBeenCalledWith('watch_later_movies', JSON.stringify([]));
 });
