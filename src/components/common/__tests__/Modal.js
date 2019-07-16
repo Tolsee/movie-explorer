@@ -37,10 +37,10 @@ it('calls onCancel when clicked outside the modal', () => {
 
   expect(getByTestId('content')).toBeInTheDocument();
 
-  fireEvent(container.querySelector('i'), new MouseEvent('click', {
+  fireEvent(container.querySelector('#modal-root > div > div'), new MouseEvent('click', {
     bubbles: true,
     cancelable: true,
   }));
 
-  expect(onCancelMock).toHaveBeenCalled();
+  expect(onCancelMock).toHaveBeenCalledTimes(1);
 });
