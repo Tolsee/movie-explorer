@@ -27,7 +27,7 @@ export async function getSimilarMovies(id) {
 }
 
 export async function getTrailerVideo(id) {
-  const { results } = await get(`movie/${id}/videos?api_key=${API_KEY}`);
+  const { results = [] } = await get(`movie/${id}/videos?api_key=${API_KEY}`);
   const video = results.find(video => video.type === 'Trailer');
   return video;
 }
