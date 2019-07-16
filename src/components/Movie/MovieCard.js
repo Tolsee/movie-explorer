@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { H1, Paragraph } from 'components/common/typo';
 import Button from 'antd/lib/button';
@@ -94,14 +94,20 @@ export default function MovieCard({ id, coverImg, title, overview, goToMovie, ..
   const [openModal, setOpenModal] = useState(false);
   const [video, setVideo] = useState({});
 
-  async function handlePlay(e) {
+  useEffect(() => {
+    (async function () {
+      const video = await getTrailerVideo(id);
+      setVideo(video || {});
+    })()
+  }, [id]);
+
+  function playToggle(e) {
     e.stopPropagation();
-    const video = await getTrailerVideo(id);
-    setVideo(video);
-    setOpenModal(true);
+    setOpenModal(!openModal);
   }
 
-  function handleCardClick() {
+  function handleCardClick(e) {
+    e.preventDefault();
     goToMovie(id);
   }
 
@@ -115,10 +121,10 @@ export default function MovieCard({ id, coverImg, title, overview, goToMovie, ..
         <Title>{title}</Title>
         <Overview>{overview}</Overview>
         <MovieRating {...ratingProps} />
-        <PlayButton icon="play-circle" onClick={handlePlay}>Play Trailer</PlayButton>
+        <PlayButton icon="play-circle" onClick={playToggle}>Play Trailer</PlayButton>
         <WatchLater id={id} />
       </Desc>
-      <Modal isOpen={openModal} onCancel={() => setOpenModal(false)}>
+      <Modal isOpen={openModal} onCancel={playToggle}>
         <MoviePlayer videoKey={video.key} {...video} />
       </Modal>
     </CardWrapper>
