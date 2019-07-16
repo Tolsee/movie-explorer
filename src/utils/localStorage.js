@@ -16,7 +16,7 @@ function addToStorageSet(key: string, value: string) {
 function removeFromStorageSet(key: string, value: string) {
   const existingArray = getArray(key);
   const newArray = existingArray.filter(element => element !== value);
-  localStorage.setItem(FAVORITE_MOVIES_KEY, JSON.stringify(newArray));
+  localStorage.setItem(key, JSON.stringify(newArray));
 }
 
 export function setFavoriteMovie(id: string) {
