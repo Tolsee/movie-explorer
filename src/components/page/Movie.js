@@ -5,7 +5,7 @@ import {getMovie, getSimilarMovies} from 'utils/api';
 import Hero from 'components/Movie/Hero';
 import InfoCard from 'components/Movie/InfoCard';
 import { H1 } from 'components/common/typo';
-import { MovieCard } from 'components/Movie/MovieCard';
+import MovieCard from 'components/Movie/MovieCard';
 import Section from 'components/common/Section';
 
 export default function Movie({ history, match: { params: { id: movieId } }}) {

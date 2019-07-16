@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Input from 'antd/lib/input';
 import Pagination from 'antd/lib/pagination';
 
-import { MovieCard } from 'components/Movie/MovieCard';
+import MovieCard from 'components/Movie/MovieCard';
 import Loading from 'components/common/Loading';
 import Section from 'components/common/Section';
 import { createCoverImg } from 'utils/imageSrc';
