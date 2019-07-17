@@ -24,8 +24,8 @@ it('renders no data when no data is found', async () => {
     results: [],
     total_results: 0
   };
-  const mockJsonPromise = Promise.resolve(mockSuccessResponse); // 2
-  const mockFetchPromise = Promise.resolve({ // 3
+  const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+  const mockFetchPromise = Promise.resolve({
     json: () => mockJsonPromise,
   });
 
@@ -47,8 +47,8 @@ it('renders movie list', async () => {
     results: new Array(3).fill(movie),
     total_results: 0
   };
-  const mockJsonPromise = Promise.resolve(mockSuccessResponse); // 2
-  const mockFetchPromise = Promise.resolve({ // 3
+  const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+  const mockFetchPromise = Promise.resolve({
     json: () => mockJsonPromise,
   });
 

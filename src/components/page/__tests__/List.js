@@ -14,8 +14,8 @@ beforeEach(() => {
     vote_average: 4,
     vote_count: 100
   };
-  const mockJsonPromise = Promise.resolve(mockSuccessResponse); // 2
-  const mockFetchPromise = Promise.resolve({ // 3
+  const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+  const mockFetchPromise = Promise.resolve({
     json: () => mockJsonPromise,
   });
 
