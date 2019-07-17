@@ -19,14 +19,26 @@ const HeaderWrapper = styled.div`
   background-color: white;
 `;
 
+const RightSection = styled.div`
+  flex: 1;
+`;
+
 const StyledIcon = styled(Icon)`
   margin-right: 8px;
+  @media (max-width: 992px) { 
+    margin-right: 4px;
+  }
 `;
 
 const StyledLink = styled(Link)`
   font-size: 16px;
   &:not(:first-of-type) {
     margin-left: 24px;
+  }
+  @media (max-width: 992px) { 
+    &:not(:first-of-type) {
+      margin-left: 12px;
+    }
   }
 `;
 
@@ -38,16 +50,15 @@ type HeaderProps = {
 export default function Header({ showSearch = false, onSearch }: HeaderProps) {
   return (
     <HeaderWrapper>
-      <div>
+      <RightSection>
         {
           showSearch ?
             <Search
               placeholder="input search text"
               onSearch={onSearch}
-              style={{width: 200}}
             /> : <StyledLink to="/">Home</StyledLink>
         }
-      </div>
+      </RightSection>
       <div>
         <StyledLink to="/list/favorite">
           <StyledIcon type="heart" />Favorite
