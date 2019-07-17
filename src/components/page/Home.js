@@ -7,12 +7,19 @@ import Header from 'components/common/Header';
 import MovieCard from 'components/Movie/MovieCard';
 import Loading from 'components/common/Loading';
 import Section from 'components/common/Section';
+import { Paragraph } from 'components/common/typo';
+
 import { createCoverImg } from 'utils/imageSrc';
 import { search } from 'utils/api';
 
 
 const StyledLoading = styled(Loading)`
   height: 50vh;
+`;
+
+const NoData = styled(Paragraph)`
+  text-align: center;
+  margin-top: 48px;
 `;
 
 const FooterWrapper = styled.div`
@@ -52,18 +59,29 @@ export default function Home({ history }) {
     return loading ? null :
       (
         <FooterWrapper>
-          <Pagination current={currentPage} pageSize={20} total={totalItems} onChange={onPageChange} />
+          <Pagination
+            current={currentPage}
+            pageSize={20}
+            total={totalItems}
+            onChange={onPageChange} />
         </FooterWrapper>
       );
   }
 
-  return (
-    <>
-      <Header showSearch onSearch={onSearch}/>
-      <Section>
-        {
-          loading ? <StyledLoading size="large" /> :
-            movies.map(({ id, title, backdrop_path: path, overview, vote_average: rating, vote_count: voteCount }) =>
+  function renderData() {
+    return loading ?
+      <StyledLoading size="large"/> :
+      (
+        <>
+          {
+            movies.map(({
+                          id,
+                          title,
+                          backdrop_path: path,
+                          overview,
+                          vote_average: rating,
+                          vote_count: voteCount
+                        }) =>
               <MovieCard
                 key={id}
                 id={id}
@@ -75,8 +93,25 @@ export default function Home({ history }) {
                 goToMovie={goToMovie}
               />
             )
-        }
-        {renderPagination()}
+          }
+          {renderPagination()}
+        </>
+      )
+  }
+
+  function renderNoData() {
+    return (
+      <NoData>
+        We could not find any movie with given search text
+      </NoData>
+    )
+  }
+
+  return (
+    <>
+      <Header showSearch onSearch={onSearch}/>
+      <Section>
+        {movies.length || loading ? renderData() : renderNoData()}
       </Section>
     </>
   );

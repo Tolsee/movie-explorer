@@ -2,17 +2,26 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Pagination from 'antd/lib/pagination';
+import Icon from 'antd/lib/icon';
+import { Link } from 'react-router-dom';
 
 import Header from 'components/common/Header';
 import MovieCard from 'components/Movie/MovieCard';
 import Loading from 'components/common/Loading';
 import Section from 'components/common/Section';
+import { Paragraph } from 'components/common/typo';
+
 import { createCoverImg } from 'utils/imageSrc';
 import { getMovie } from 'utils/api';
 import { getFavoriteMovies, getWatchLaterMovies } from 'utils/localStorage';
 
 const StyledLoading = styled(Loading)`
   height: 50vh;
+`;
+
+const NoData = styled(Paragraph)`
+  text-align: center;
+  margin-top: 48px;
 `;
 
 const FooterWrapper = styled.div`
@@ -39,13 +48,12 @@ export default function List({ history, match: { params: { listName } } }) {
       } else {
         history.push('/');
       }
-      let currentMovieIds;
-      currentMovieIds = movieIds.splice((currentPage - 1) * pageSize, pageSize);
+      const currentMovieIds = movieIds.slice((currentPage - 1) * pageSize, currentPage * pageSize - 1);
       const movies = await Promise.all(currentMovieIds.map(id => getMovie(id)));
       setMovies(movies);
       setTotalItems(movieIds.length);
       setLoading(false);
-    })()
+    })();
   }, [currentPage, pageSize, listName, history]);
 
 
@@ -78,13 +86,20 @@ export default function List({ history, match: { params: { listName } } }) {
       );
   }
 
-  return (
-    <>
-      <Header />
-      <Section>
-        {
-          loading ? <StyledLoading size="large" /> :
-            movies.map(({ id, title, backdrop_path: path, overview, vote_average: rating, vote_count: voteCount }) =>
+  function renderData() {
+    return loading ?
+      <StyledLoading size="large"/> :
+      (
+        <>
+          {
+            movies.map(({
+                          id,
+                          title,
+                          backdrop_path: path,
+                          overview,
+                          vote_average: rating,
+                          vote_count: voteCount
+                        }) =>
               <MovieCard
                 key={id}
                 id={id}
@@ -96,10 +111,25 @@ export default function List({ history, match: { params: { listName } } }) {
                 goToMovie={goToMovie}
               />
             )
-        }
-        {
-          renderPagination()
-        }
+          }
+          {renderPagination()}
+        </>
+      )
+  }
+
+  function renderNoData() {
+    return (
+      <NoData>
+        There is no movies in {listName === 'favorite' ? 'favorite' : 'watch later'} list. <Link to="/">Discover movies <Icon type="arrow-right" /></Link>
+      </NoData>
+    )
+  }
+
+  return (
+    <>
+      <Header />
+      <Section>
+        {movies.length || loading ? renderData() : renderNoData()}
       </Section>
     </>
   );
