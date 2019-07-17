@@ -113,7 +113,7 @@ export default function MovieCard({ id, coverImg, title, overview, goToMovie, ..
 
   const { key: videoKey, site } = video;
   return  (
-    <CardWrapper onClick={handleCardClick}>
+    <CardWrapper data-testid="movie-card" onClick={handleCardClick}>
       <Cover>
         <CoverImg src={coverImg} alt={ `${title} poster` } />
         <StyledFavorite id={id} />

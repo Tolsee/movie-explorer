@@ -21,6 +21,7 @@ const HeaderWrapper = styled.div`
 
 const RightSection = styled.div`
   flex: 1;
+  max-width: 400px;
 `;
 
 const StyledIcon = styled(Icon)`
@@ -54,7 +55,7 @@ export default function Header({ showSearch = false, onSearch }: HeaderProps) {
         {
           showSearch ?
             <Search
-              placeholder="input search text"
+              placeholder="search movie"
               onSearch={onSearch}
             /> : <StyledLink to="/">Home</StyledLink>
         }
