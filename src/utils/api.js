@@ -19,7 +19,11 @@ export async function search(searchText, page) {
 }
 
 export async function getMovie(id) {
-  return await get(`movie/${id}?append_to_response=videos&api_key=${API_KEY}`);
+  const movie = await get(`movie/${id}?append_to_response=videos&api_key=${API_KEY}`);
+  if (movie.status_code === 34) {
+    return undefined;
+  }
+  return movie;
 }
 
 export async function getSimilarMovies(id) {
