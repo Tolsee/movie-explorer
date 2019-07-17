@@ -32,7 +32,7 @@ const FooterWrapper = styled.div`
 
 export default function List({ history, match: { params: { listName } } }) {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalItems, setTotalItems] = useState(undefined);

@@ -30,7 +30,7 @@ const FooterWrapper = styled.div`
 
 export default function Home({ history }) {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(undefined);
   const [totalItems, setTotalItems] = useState(undefined);
 
