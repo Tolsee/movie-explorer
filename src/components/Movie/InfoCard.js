@@ -169,7 +169,7 @@ export default function InfoCard({
   }
 
   return (
-    <InfoContainer>
+    <InfoContainer data-testid="info-card">
       <Card>
         {loading ? <Loading size="large" /> : renderDetails()}
       </Card>
