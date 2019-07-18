@@ -3,9 +3,9 @@
 
 ## Overview
 
-This is a movie explorer app. You can view popular movies, set a movie in your favorite or watch later lists<br>
+This is a movie explorer application. You can view popular movies, set a movie in your favorite or watch later lists<br>
 
-This uses [The movie database](https://themoviedb.org) as it's datasource.
+This application uses [The movie database](https://themoviedb.org) as it's datasource.
 
 Demo: https://master.d1cozvwafl977n.amplifyapp.com/
 
@@ -32,5 +32,5 @@ Builds the app for production to the `build` folder.<br>
 ## Improvements
 
 - Use the movie db api to add movies to watch later and favorite list.
-- Let the user rate movies
-- Add more details to movie page
+- Let the user rate movies.
+- Add more details to movie page.
