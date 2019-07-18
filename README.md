@@ -11,7 +11,7 @@ Demo: https://master.d1cozvwafl977n.amplifyapp.com/
 
 ## Available Scripts
 
-In the project directory, you can run:
+To run your application, you will need to change `REACT_APP_API_KEY` to your api key from [The movie database](https://themoviedb.org).<br>
 
 ### `npm start`
 
