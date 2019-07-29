@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement, waitForElementToBeRemoved } from 'utils/testUtil';
+import { render, waitForElementToBeRemoved } from 'utils/testUtil';
 import Movie from 'components/page/Movie';
 
 const movie = {
@@ -11,7 +11,7 @@ const movie = {
   vote_count: 100
 };
 
-function mockFectchResponse(response) {
+function mockFetchResponse(response) {
   const mockJsonPromise = Promise.resolve(response);
   return Promise.resolve({
     json: () => mockJsonPromise,
@@ -29,10 +29,7 @@ it('renders no data when no movie is found', async () => {
   const mockSuccessResponse = {
     status_code: 34
   };
-  const mockJsonPromise = Promise.resolve(mockSuccessResponse);
-  const mockFetchPromise = Promise.resolve({
-    json: () => mockJsonPromise,
-  });
+  const mockFetchPromise = mockFetchResponse(mockSuccessResponse)
 
   window.fetch = jest.fn(() => mockFetchPromise);
 
@@ -56,9 +53,9 @@ it('renders infoCard and similar movies', async () => {
   window.fetch.mockImplementation((url) => {
     // when called for similar movies
     if ((new RegExp('movie/123123/similar')).test(url)) {
-      return mockFectchResponse(mockSimilarResponse);
+      return mockFetchResponse(mockSimilarResponse);
     }
-    return mockFectchResponse(movie);
+    return mockFetchResponse(movie);
   });
 
   const { container, getByTestId, queryAllByTestId } = render(<Movie {...props} />);

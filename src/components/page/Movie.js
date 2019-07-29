@@ -21,15 +21,16 @@ const NoData = styled(Paragraph)`
 export default function Movie({ history, match: { params: { id: movieId } }}) {
   const [movie, setMovie] = useState(undefined);
   const [loading, setLoading] = useState(true);
-  const [similarMovies, setSimilarMovies] = useState([{}]);
+  const [similarMovies, setSimilarMovies] = useState([]);
 
   useEffect(() => {
     (async function () {
+      setLoading(true);
       const movie = await getMovie(movieId);
       setMovie(movie);
       setLoading(false);
       const { results } = await getSimilarMovies(movieId);
-      setSimilarMovies(results);
+      setSimilarMovies(results || []);
     })();
   }, [movieId]);
 

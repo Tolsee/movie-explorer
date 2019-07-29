@@ -3,7 +3,9 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 
 async function get(url) {
   const response = await fetch(`${API_BASE}/${url}`);
-  return response.json();
+  const json = response.json();
+  if (json.status_code === 429) return null;
+  return json;
 }
 
 export async function search(searchText, page) {
@@ -20,7 +22,7 @@ export async function search(searchText, page) {
 
 export async function getMovie(id) {
   const movie = await get(`movie/${id}?append_to_response=videos&api_key=${API_KEY}`);
-  if (movie.status_code === 34) {
+  if (movie && movie.status_code === 34) {
     return undefined;
   }
   return movie;
@@ -31,7 +33,6 @@ export async function getSimilarMovies(id) {
 }
 
 export async function getTrailerVideo(id) {
-  const { results = [] } = await get(`movie/${id}/videos?api_key=${API_KEY}`);
-  const video = results.find(video => video.type === 'Trailer');
-  return video;
+    const {results = []} = await get(`movie/${id}/videos?api_key=${API_KEY}`) || {};
+    return results.find(video => video.type === 'Trailer');
 }

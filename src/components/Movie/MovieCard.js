@@ -1,5 +1,5 @@
 // @flow
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { H1, Paragraph } from 'components/common/typo';
 import Button from 'antd/lib/button';
@@ -9,7 +9,6 @@ import MovieRating from 'components/common/Rating';
 import type { RatingProps } from 'components/common/Rating';
 import Favorite from 'components/common/Favorite';
 import WatchLater from 'components/common/WatchLater';
-import { getTrailerVideo } from 'utils/api';
 
 const CardWrapper = styled.div`
   border-radius: 20px;
@@ -90,16 +89,15 @@ type Props = {
   goToMovie: Function;
 } & RatingProps;
 
-export default function MovieCard({ id, coverImg, title, overview, goToMovie, ...ratingProps }: Props) {
+export default function MovieCard({
+                                    id,
+                                    coverImg,
+                                    title,
+                                    overview,
+                                    goToMovie,
+                                    ...ratingProps
+                                  }: Props) {
   const [openModal, setOpenModal] = useState(false);
-  const [video, setVideo] = useState({});
-
-  useEffect(() => {
-    (async function () {
-      const video = await getTrailerVideo(id);
-      setVideo(video || {});
-    })()
-  }, [id]);
 
   function playToggle(e) {
     e.stopPropagation();
@@ -111,7 +109,6 @@ export default function MovieCard({ id, coverImg, title, overview, goToMovie, ..
     goToMovie(id);
   }
 
-  const { key: videoKey, site } = video;
   return  (
     <CardWrapper data-testid="movie-card" onClick={handleCardClick}>
       <Cover>
@@ -126,7 +123,7 @@ export default function MovieCard({ id, coverImg, title, overview, goToMovie, ..
         <WatchLater id={id} />
       </Desc>
       <Modal isOpen={openModal} onCancel={playToggle}>
-        <MoviePlayer videoKey={videoKey} site={site} />
+        <MoviePlayer id={id} />
       </Modal>
     </CardWrapper>
   )
