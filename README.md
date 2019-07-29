@@ -3,15 +3,15 @@
 
 ## Overview
 
-This is a movie explorer app. You can view popular movies, set a movie in your favorite or watch later lists<br>
+This is a movie explorer application. You can view popular movies, set a movie in your favorite or watch later lists<br>
 
-This uses [The movie database](https://themoviedb.org) as it's datasource.
+This application uses [The movie database](https://themoviedb.org) as it's datasource.
 
 Demo: https://master.d1cozvwafl977n.amplifyapp.com/
 
 ## Available Scripts
 
-In the project directory, you can run:
+To run your application, you will need to change `REACT_APP_API_KEY` to your api key from [The movie database](https://themoviedb.org).<br>
 
 ### `npm start`
 
@@ -32,5 +32,5 @@ Builds the app for production to the `build` folder.<br>
 ## Improvements
 
 - Use the movie db api to add movies to watch later and favorite list.
-- Let the user rate movies
-- Add more details to movie page
+- Let the user rate movies.
+- Add more details to movie page.
