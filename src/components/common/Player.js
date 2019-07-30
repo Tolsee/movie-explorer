@@ -1,7 +1,10 @@
 // @flow
 import React, { useState, useEffect } from 'react';
 import Player from 'react-player';
+
+import message from 'antd/lib/message';
 import { getTrailerVideo } from 'utils/api';
+
 
 type Props = {
   id?: string;
@@ -19,13 +22,18 @@ export default function MoviePlayer({ id, videoKey, site }: Props) {
     if (id) {
       (async function () {
         const video = await getTrailerVideo(id);
+        if (!video) {
+          message.error('Trailer could not be found');
+        }
         const { key: videoKey, site } = video;
         const url = site === 'YouTube' ? createYoutube(videoKey) : '';
         setUrl(url)
       })()
+    } else if (site === 'YouTube') {
+        const url = createYoutube(videoKey);
+        setUrl(url)
     } else {
-      const url = site === 'YouTube' ? createYoutube(videoKey) : '';
-      setUrl(url)
+      message.error('Trailer could not be found');
     }
   }, [id, videoKey, site]);
 
