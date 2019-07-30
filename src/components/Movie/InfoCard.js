@@ -135,7 +135,7 @@ export default function InfoCard({
           <Poster src={poster} alt="" />
           <PlayButton icon="play-circle" onClick={modalToggle}>Play Trailer</PlayButton>
           <Modal isOpen={openModal} onCancel={modalToggle}>
-            <MoviePlayer videoKey={trailer.key} {...trailer} />
+            <MoviePlayer videoKey={trailer.key} site={trailer.site} />
           </Modal>
         </LeftSection>
         <RightSection>
